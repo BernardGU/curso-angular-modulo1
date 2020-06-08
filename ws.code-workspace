@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{"path": "./src/app/components"},
+		{"path": "./src/app/models"},
+		{"path": "./src/app"},
+		{"path": "./src/assets"},
+		{"path": "./src"},
+		{"path": "."},
+	],
+	"settings": {}
+}
