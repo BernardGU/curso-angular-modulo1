@@ -1,11 +1,35 @@
 <div class="card-content">
     <div class="card-img">
-        <img src="{{url}}" alt="">
-        <span><h4>{{ nombre }}</h4></span>
+        <img src="{{ destino.url }}" alt="">
+        <span [ngClass]="getFavoriteIconClasses() | async"(click)="setFavorite()">favorite</span>
+        <span class="index text-center font-weight-bold"><h4>{{ index }}</h4></span>
     </div>
     <div class="card-desc">
-        <h3>{{ nombre }}</h3>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis voluptas totam</p>
-        <a href="#" class="btn-card">Read</a>
+        <h3>{{ destino.nombre }}</h3>
+        <p>{{ destino.descripcion }}</p>
+        <h2>Servicios:</h2>
+        <ul>
+            <li *ngFor="let s of destino.servicios">
+                <span class="material-icons">{{ s.icon }}</span>
+                <span>{{ s.name }}</span>
+            </li>
+        </ul>
+        <div class="row text-center mb-4">
+            <span class="col">
+                <a class="btn-card" [routerLink]="['/destino']">Detalles</a>
+            </span>
+            <span class="col">
+                <a class="btn-card" (click)="deleteDestino()">Borrar</a>
+            </span>
+        </div>
+        <div class="row text-center">
+            <span class="col-4">
+                <a class="material-icons icon-btn-card downvote" (click)="decreaseVotos()">thumb_down</a>
+            </span>
+            <span class="cuenta-votos col-4 align-middle">{{ destino.votos }}</span>
+            <span class="col-4">
+                <a class="material-icons icon-btn-card upvote" (click)="increaseVotos()">thumb_up</a>
+            </span>
+        </div>
     </div>
 </div>

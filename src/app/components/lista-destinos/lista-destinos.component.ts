@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { DestinoViaje } from '../../models/destino-viaje.model';
+import { DestinosApiClient } from 'src/app/models/destinos-api-client.model';
 
 @Component({
   selector: 'app-lista-destinos',
@@ -7,22 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListaDestinosComponent implements OnInit {
 
-  destinos:{
-    nombre:string,
-    url:string
-  }[];
+  updates: string[];
 
-  constructor() {
-    this.destinos = [
-      {nombre: 'Destino 1', url: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fkittybloger.files.wordpress.com%2F2012%2F05%2Fcute-kittens-20-great-pictures-12.jpg%3Fw%3D500%26h%3D335&f=1&nofb=1'}
-    ];
+  constructor(
+    public api:DestinosApiClient
+  ) { }
+  
+  ngOnInit(): void {
+    this.updates = [];
+    this.api.fetchFavorito().subscribe((d: DestinoViaje) => {
+      if(d != null) {
+        this.updates.push('Se ha elegido a ' + d.nombre);
+      }
+    });
   }
-
-  ngOnInit(): void { }
-
-  guardar(nombre:string, url:string): boolean {
-    this.destinos.push({nombre: nombre, url: url});
-    return false;
-  }
-
 }

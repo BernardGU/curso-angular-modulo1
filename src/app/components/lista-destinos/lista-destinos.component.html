@@ -2,29 +2,24 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <span class="anchor" id="formLogin"></span>
-            <!--form card login with validation feedback-->
-            <div class="card card-outline-secondary">
-                <div class="card-header">
-                    <h3 class="mb-0">Whishlist</h3>
-                </div>
-                <div class="card-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Ingresar nombre..." #nombre>
-                        </div>
-                        <div class="form-group">
-                            <label for="imagenUrl">Imagen Url</label>
-                            <input type="text" class="form-control" id="imagenUrl" placeholder="Ingresar url..." #url>
-                        </div>
-                        <button type="submit" class="btn btn-primary" (click)="guardar(nombre.value, url.value)">Guardar!</button>
-                    </form>
-                </div>
-            </div>
+            <app-destino-form (onSave)="api.addDestino($event)"></app-destino-form>
         </div>
     </div>
-    <hr class="mb-5">
+    <hr class="my-3">
     <div class="row">
-        <app-destino-viaje *ngFor="let d of destinos" [nombre]="d.nombre" [url]='d.url'></app-destino-viaje>
+        <app-destino-viaje
+            *ngFor="let d of (api.fetchDestinos() | async); let i = index"
+            [destino]="d"
+            [index]="i+1"
+            (onFavorite)="api.setFavorite($event)"
+            (onDelete)="api.deleteDestino($event)"
+        ></app-destino-viaje>
     </div>
+    <!--<hr class="mb-5">
+    <div class="row">
+        <h5>Actividad</h5>
+        <ul>
+            <li *ngFor="let u of updates">{{ u }}</li>
+        </ul>
+    </div>-->
 </div>
